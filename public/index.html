@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#3b82f6" />
+    <meta
+      name="description"
+      content="RifaMax - A plataforma mais segura e confiável para participar de rifas online. Escolha seus números da sorte e concorra a prêmios incríveis!"
+    />
+    <meta name="keywords" content="rifa, sorteio, prêmios, online, PIX, mercado pago, seguro, confiável" />
+    <meta name="author" content="RifaMax" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rifamax.com/" />
+    <meta property="og:title" content="RifaMax - Rifas Online Seguras e Confiáveis" />
+    <meta property="og:description" content="A plataforma mais segura para participar de rifas online. Pagamento via PIX, sorteios transparentes e prêmios incríveis!" />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://rifamax.com/" />
+    <meta property="twitter:title" content="RifaMax - Rifas Online Seguras e Confiáveis" />
+    <meta property="twitter:description" content="A plataforma mais segura para participar de rifas online. Pagamento via PIX, sorteios transparentes e prêmios incríveis!" />
+    <meta property="twitter:image" content="%PUBLIC_URL%/og-image.jpg" />
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Preconnect to improve performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <title>RifaMax - Rifas Online Seguras e Confiáveis</title>
+  </head>
+  <body>
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>JavaScript Necessário</h1>
+        <p>Você precisa habilitar o JavaScript para executar este aplicativo.</p>
+        <p>You need to enable JavaScript to run this app.</p>
+      </div>
+    </noscript>
+    
+    <div id="root"></div>
+    
+    <!-- Loading fallback -->
+    <script>
+      // Show loading indicator while React loads
+      if (!window.React) {
+        document.getElementById('root').innerHTML = `
+          <div style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Inter', Arial, sans-serif;
+            background-color: #f8fafc;
+            flex-direction: column;
+          ">
+            <div style="
+              width: 40px;
+              height: 40px;
+              border: 3px solid #e5e7eb;
+              border-top: 3px solid #3b82f6;
+              border-radius: 50%;
+              animation: spin 1s linear infinite;
+              margin-bottom: 16px;
+            "></div>
+            <p style="color: #6b7280; font-size: 16px;">Carregando RifaMax...</p>
+          </div>
+          <style>
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          </style>
+        `;
+      }
+    </script>
+  </body>
+</html>
