@@ -14,6 +14,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import Button from '../ui/Button';
 import Modal from '../ui/Modal';
 import AuthModal from '../auth/AuthModal';
+import RifaStatusLogo from '../RifaStatusLogo';
 
 const Header = () => {
   const { currentUser, userData, logout, isAdmin } = useAuth();
@@ -37,54 +38,26 @@ const Header = () => {
     setIsAuthModalOpen(false);
   };
 
-  const isActivePage = (path) => {
-    return location.pathname === path;
-  };
-
-  const navItems = [
-    { name: 'Início', path: '/', icon: HomeIcon },
-    { name: 'Meus Tickets', path: '/meus-tickets', icon: Ticket, requireAuth: true }
-  ];
+  const navItems = [];
 
   return (
     <>
              <header className="bg-black shadow-sm border-b border-gray-800 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2">
-                             <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                 <Ticket className="w-5 h-5 text-white" />
-               </div>
-               <span className="text-xl font-bold text-white">
-                RifaStatus
-              </span>
-            </Link>
+          <div className="flex items-center h-16 relative">
+            {/* Center - Logo (absolute positioning) */}
+            <div className="absolute left-1/2 transform -translate-x-1/2">
+              <Link to="/" className="flex items-center">
+                <RifaStatusLogo className="h-8 w-auto" inverted={false} />
+              </Link>
+            </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => {
-                if (item.requireAuth && !currentUser) return null;
-                
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                                         className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                       isActivePage(item.path)
-                         ? 'text-white bg-gray-800'
-                         : 'text-gray-300 hover:text-white hover:bg-gray-800'
-                     }`}
-                  >
-                    <item.icon className="w-4 h-4" />
-                    <span>{item.name}</span>
-                  </Link>
-                );
-              })}
-            </nav>
+            {/* Left side - Empty for balance */}
+            <div className="flex-1"></div>
 
-            {/* User Menu / Auth Buttons */}
-            <div className="hidden md:flex items-center space-x-4">
+            {/* Right side - User Menu / Auth Buttons */}
+            <div className="flex-1 flex justify-end">
+              <div className="hidden md:flex items-center space-x-4">
               {currentUser ? (
                 <div className="relative">
                                      <button
@@ -156,18 +129,21 @@ const Header = () => {
                 </Button>
               )}
             </div>
+            </div>
 
             {/* Mobile menu button */}
-                         <button
-               onClick={() => setIsMenuOpen(!isMenuOpen)}
-                               className="md:hidden p-2 rounded-md text-white hover:bg-gray-800"
-             >
-              {isMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2 rounded-md text-white hover:bg-gray-800"
+              >
+                {isMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -181,28 +157,8 @@ const Header = () => {
                              className="md:hidden bg-black border-t border-gray-800"
             >
               <div className="px-4 pt-2 pb-3 space-y-1">
-                {navItems.map((item) => {
-                  if (item.requireAuth && !currentUser) return null;
-                  
-                  return (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                                             className={`flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium ${
-                         isActivePage(item.path)
-                           ? 'text-white bg-gray-800'
-                           : 'text-gray-300 hover:text-white hover:bg-gray-800'
-                       }`}
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <item.icon className="w-5 h-5" />
-                      <span>{item.name}</span>
-                    </Link>
-                  );
-                })}
-
                 {currentUser ? (
-                  <div className="border-t border-gray-700 pt-3 mt-3">
+                  <div className="pt-1 mt-1">
                     <div className="px-3 py-2 text-sm text-white">
                       {userData?.nome || currentUser.displayName || 'Usuário'}
                     </div>
@@ -214,6 +170,15 @@ const Header = () => {
                     >
                       <User className="w-5 h-5" />
                       <span>Meu Perfil</span>
+                    </Link>
+                    
+                    <Link
+                      to="/meus-tickets"
+                      className="flex items-center space-x-2 px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Ticket className="w-5 h-5" />
+                      <span>Meus Tickets</span>
                     </Link>
                     
                     {isAdmin() && (

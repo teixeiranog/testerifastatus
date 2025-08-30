@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Ticket, Heart, Instagram, MessageCircle } from 'lucide-react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import RifaStatusLogo from '../RifaStatusLogo';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -29,11 +30,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-8">
           {/* Logo e Descrição */}
           <div className="text-center">
-            <Link to="/" className="flex items-center justify-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center shadow-lg">
-                <Ticket className="w-5 h-5 text-white" />
-              </div>
-                              <span className="text-xl font-bold text-black">RifaStatus</span>
+            <Link to="/" className="flex items-center justify-center mb-4">
+              <RifaStatusLogo className="h-8 w-auto" inverted={true} />
             </Link>
             
             <p className="text-gray-600 mb-6 max-w-md mx-auto">

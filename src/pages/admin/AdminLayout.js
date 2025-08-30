@@ -17,6 +17,7 @@ import {
 import { useAuth } from '../../contexts/AuthContext';
 import AdminProvider from '../../contexts/AdminContext';
 import Button from '../../components/ui/Button';
+import RifaStatusLogo from '../../components/RifaStatusLogo';
 
 const AdminLayout = () => {
   const { currentUser, isAdmin, logout } = useAuth();
@@ -53,11 +54,8 @@ const AdminLayout = () => {
           <div className="flex flex-col flex-grow pt-5 bg-white border-r border-gray-200 overflow-y-auto">
             {/* Logo */}
             <div className="flex items-center flex-shrink-0 px-4">
-              <Link to="/" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                  <Ticket className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold text-gray-900">RifaStatus</span>
+              <Link to="/" className="flex items-center">
+                <RifaStatusLogo className="h-8 w-auto" inverted={true} />
               </Link>
             </div>
 
@@ -130,11 +128,8 @@ const AdminLayout = () => {
                 <div className="flex flex-col h-full">
                   {/* Header */}
                   <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                    <Link to="/" className="flex items-center space-x-2">
-                      <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                        <Ticket className="w-5 h-5 text-white" />
-                      </div>
-                      <span className="text-xl font-bold text-gray-900">RifaStatus</span>
+                    <Link to="/" className="flex items-center">
+                      <RifaStatusLogo className="h-8 w-auto" inverted={true} />
                     </Link>
                     
                     <button
