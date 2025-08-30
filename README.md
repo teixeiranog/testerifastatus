@@ -1,4 +1,4 @@
-# 🎲 RifaMax - Sistema Completo de Rifas Online
+# 🎲 RifaStatus - Sistema Completo de Rifas Online
 
 Um sistema moderno e seguro para criar e gerenciar rifas online com pagamentos via PIX através do Mercado Pago.
 
@@ -63,8 +63,8 @@ Um sistema moderno e seguro para criar e gerenciar rifas online com pagamentos v
 
 ### 1. Clone o repositório
 ```bash
-git clone https://github.com/seu-usuario/rifamax.git
-cd rifamax
+git clone https://github.com/seu-usuario/rifastatus.git
+cd rifastatus
 ```
 
 ### 2. Instale as dependências
@@ -306,7 +306,7 @@ npm test
 ```bash
 # Configurar credenciais de produção
 firebase functions:config:set mercadopago.access_token="PROD-SUA-ACCESS-TOKEN"
-firebase functions:config:set app.url="https://rifamax.com"
+firebase functions:config:set app.url="https://rifastatus.com"
 ```
 
 ### Checklist de Deploy
@@ -353,9 +353,9 @@ firebase functions:config:get
 ```
 
 ### Contato
-- 📧 Email: suporte@rifamax.com
+- 📧 Email: suporte@rifastatus.com
 - 💬 WhatsApp: (11) 99999-9999
-- 🐛 Issues: [GitHub Issues](https://github.com/seu-usuario/rifamax/issues)
+- 🐛 Issues: [GitHub Issues](https://github.com/seu-usuario/rifastatus/issues)
 
 ---
 

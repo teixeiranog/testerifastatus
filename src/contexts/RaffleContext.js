@@ -75,8 +75,14 @@ export const RaffleProvider = ({ children }) => {
         
         setRifaAtiva(rifaData);
         
-        // Buscar números da rifa
-        await buscarNumerosRifa(rifaId);
+        // Buscar números da rifa (silenciosamente se usuário não logado)
+        try {
+          await buscarNumerosRifa(rifaId);
+        } catch (numerosError) {
+          console.log('Erro ao carregar números - continuando sem números:', numerosError);
+          // Se falhar, definir array vazio para números
+          setNumerosRifa([]);
+        }
         
         return rifaData;
       } else {
@@ -85,7 +91,10 @@ export const RaffleProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Erro ao buscar rifa:', error);
-      toast.error('Erro ao carregar rifa');
+      // Só mostrar erro se não for problema de permissão
+      if (!error.message.includes('permission') && !error.message.includes('PERMISSION_DENIED')) {
+        toast.error('Erro ao carregar rifa');
+      }
       return null;
     } finally {
       setLoading(false);
@@ -104,25 +113,33 @@ export const RaffleProvider = ({ children }) => {
       const querySnapshot = await getDocs(q);
       const numerosData = [];
       
-      // Buscar informações dos compradores para números vendidos
-      const numerosVendidos = querySnapshot.docs.filter(doc => doc.data().status === 'vendido' && doc.data().id_usuario);
-      const userIds = [...new Set(numerosVendidos.map(doc => doc.data().id_usuario))];
-      
+      // Buscar informações dos compradores para números vendidos apenas se o usuário estiver logado
+      // Isso evita erros de permissão quando usuários não autenticados acessam a rifa
       let usuariosData = {};
-      if (userIds.length > 0) {
-        const usuariosSnapshot = await Promise.all(
-          userIds.map(userId => getDoc(doc(db, 'usuarios', userId)))
-        );
+      if (currentUser) {
+        const numerosVendidos = querySnapshot.docs.filter(doc => doc.data().status === 'vendido' && doc.data().id_usuario);
+        const userIds = [...new Set(numerosVendidos.map(doc => doc.data().id_usuario))];
         
-        usuariosSnapshot.forEach((userDoc, index) => {
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            usuariosData[userIds[index]] = {
-              nome: userData.nome,
-              email: userData.email
-            };
+        if (userIds.length > 0) {
+          try {
+            const usuariosSnapshot = await Promise.all(
+              userIds.map(userId => getDoc(doc(db, 'usuarios', userId)))
+            );
+            
+            usuariosSnapshot.forEach((userDoc, index) => {
+              if (userDoc.exists()) {
+                const userData = userDoc.data();
+                usuariosData[userIds[index]] = {
+                  nome: userData.nome,
+                  email: userData.email
+                };
+              }
+            });
+          } catch (userError) {
+            console.log('Erro ao carregar informações dos compradores (provavelmente permissão):', userError.message);
+            // Continuar sem as informações dos compradores
           }
-        });
+        }
       }
       
       querySnapshot.forEach((doc) => {
@@ -131,8 +148,8 @@ export const RaffleProvider = ({ children }) => {
           ...doc.data()
         };
         
-        // Adicionar informações do comprador se o número foi vendido
-        if (numeroData.status === 'vendido' && numeroData.id_usuario && usuariosData[numeroData.id_usuario]) {
+        // Adicionar informações do comprador se o número foi vendido e usuário está logado
+        if (currentUser && numeroData.status === 'vendido' && numeroData.id_usuario && usuariosData[numeroData.id_usuario]) {
           numeroData.comprador_nome = usuariosData[numeroData.id_usuario].nome;
           numeroData.comprador_email = usuariosData[numeroData.id_usuario].email;
         }
@@ -160,7 +177,13 @@ export const RaffleProvider = ({ children }) => {
         console.error('Erro ao verificar status da rifa:', rifaError);
       }
       
-      toast.error('Erro ao carregar números da rifa');
+      // Não mostrar erro se o usuário não estiver logado ou se for erro de permissão
+      if (currentUser && !error.message.includes('permission') && !error.message.includes('PERMISSION_DENIED')) {
+        toast.error('Erro ao carregar números da rifa');
+      }
+      
+      // Retornar array vazio para permitir que a página continue funcionando
+      setNumerosRifa([]);
       return [];
     }
   };

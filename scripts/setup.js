@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Script de configuração inicial para o projeto RifaMax
+ * Script de configuração inicial para o projeto RifaStatus
  * Este script ajuda a configurar o projeto pela primeira vez
  */
 
@@ -19,7 +19,7 @@ function question(query) {
 }
 
 async function main() {
-  console.log('🎲 Bem-vindo ao RifaMax Setup!\n');
+  console.log('🎲 Bem-vindo ao RifaStatus Setup!\n');
   console.log('Este script irá ajudá-lo a configurar o projeto pela primeira vez.\n');
 
   // Verificar se .env já existe
@@ -142,7 +142,7 @@ ${googleAnalyticsId ? `REACT_APP_GOOGLE_ANALYTICS_ID=${googleAnalyticsId}` : '# 
   console.log('   cd functions && npm install');
   console.log('\n4. Inicie o projeto:');
   console.log('   npm start');
-  console.log('\n🎉 Divirta-se desenvolvendo com o RifaMax!');
+  console.log('\n🎉 Divirta-se desenvolvendo com o RifaStatus!');
 
   rl.close();
 }

@@ -32,7 +32,7 @@ const TermosDeUso = () => {
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Aceitação dos Termos</h2>
               <p className="text-gray-700 mb-4">
-                Ao acessar e utilizar a plataforma RifaMax, você concorda em cumprir e estar vinculado a estes Termos de Uso. 
+                Ao acessar e utilizar a plataforma RifaStatus, você concorda em cumprir e estar vinculado a estes Termos de Uso. 
                 Se você não concordar com qualquer parte destes termos, não deve utilizar nossos serviços.
               </p>
             </div>
@@ -40,7 +40,7 @@ const TermosDeUso = () => {
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Descrição do Serviço</h2>
               <p className="text-gray-700 mb-4">
-                O RifaMax é uma plataforma online que permite a criação, gerenciamento e participação em rifas digitais. 
+                O RifaStatus é uma plataforma online que permite a criação, gerenciamento e participação em rifas digitais. 
                 Nossos serviços incluem:
               </p>
               <ul className="list-disc pl-6 text-gray-700 mb-4">
@@ -137,7 +137,7 @@ const TermosDeUso = () => {
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Limitação de Responsabilidade</h2>
               <p className="text-gray-700 mb-4">
-                O RifaMax não se responsabiliza por:
+                O RifaStatus não se responsabiliza por:
               </p>
               <ul className="list-disc pl-6 text-gray-700 mb-4">
                 <li>Perdas decorrentes de falhas técnicas</li>
@@ -166,7 +166,7 @@ const TermosDeUso = () => {
 
             <div className="border-t border-gray-200 pt-6 mt-8">
               <p className="text-sm text-gray-500">
-                Estes termos constituem o acordo completo entre você e o RifaMax 
+                Estes termos constituem o acordo completo entre você e o RifaStatus 
                 em relação ao uso da plataforma.
               </p>
             </div>

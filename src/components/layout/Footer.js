@@ -33,7 +33,7 @@ const Footer = () => {
               <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center shadow-lg">
                 <Ticket className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-black">RifaMax</span>
+                              <span className="text-xl font-bold text-black">RifaStatus</span>
             </Link>
             
             <p className="text-gray-600 mb-6 max-w-md mx-auto">
@@ -70,7 +70,7 @@ const Footer = () => {
         <div className="border-t border-gray-200 mt-8 pt-8">
           <div className="flex flex-col items-center space-y-4">
             <p className="text-gray-500 text-sm">
-              © {currentYear} RifaMax. Todos os direitos reservados.
+              © {currentYear} RifaStatus. Todos os direitos reservados.
             </p>
             <div className="flex space-x-6">
               <Link 

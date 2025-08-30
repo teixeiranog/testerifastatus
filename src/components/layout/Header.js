@@ -57,7 +57,7 @@ const Header = () => {
                  <Ticket className="w-5 h-5 text-white" />
                </div>
                <span className="text-xl font-bold text-white">
-                RifaMax
+                RifaStatus
               </span>
             </Link>
 

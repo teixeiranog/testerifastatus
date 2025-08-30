@@ -32,7 +32,7 @@ const PoliticaPrivacidade = () => {
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Introdução</h2>
               <p className="text-gray-700 mb-4">
-                A RifaMax está comprometida em proteger sua privacidade. Esta Política de Privacidade 
+                A RifaStatus está comprometida em proteger sua privacidade. Esta Política de Privacidade 
                 explica como coletamos, usamos, armazenamos e protegemos suas informações pessoais 
                 quando você utiliza nossa plataforma de rifas online.
               </p>
@@ -196,7 +196,7 @@ const PoliticaPrivacidade = () => {
                 tratamos suas informações pessoais, entre em contato conosco:
               </p>
               <ul className="list-disc pl-6 text-gray-700 mb-4">
-                <li>Através da plataforma RifaMax</li>
+                <li>Através da plataforma RifaStatus</li>
                 <li>Pelo e-mail de suporte disponível no rodapé do site</li>
                 <li>Pelo WhatsApp de suporte (quando disponível)</li>
               </ul>
@@ -204,7 +204,7 @@ const PoliticaPrivacidade = () => {
 
             <div className="border-t border-gray-200 pt-6 mt-8">
               <p className="text-sm text-gray-500">
-                Esta Política de Privacidade é parte integrante dos Termos de Uso da RifaMax 
+                Esta Política de Privacidade é parte integrante dos Termos de Uso da RifaStatus 
                 e deve ser lida em conjunto com eles.
               </p>
             </div>

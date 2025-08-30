@@ -1,6 +1,6 @@
 {
-  "name": "rifamax-functions",
-  "description": "Cloud Functions para o sistema RifaMax",
+  "name": "rifastatus-functions",
+  "description": "Cloud Functions para o sistema RifaStatus",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",

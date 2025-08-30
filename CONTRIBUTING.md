@@ -1,6 +1,6 @@
-# 🤝 Contribuindo para o RifaMax
+# 🤝 Contribuindo para o RifaStatus
 
-Agradecemos seu interesse em contribuir para o RifaMax! Este documento fornece diretrizes para contribuições.
+Agradecemos seu interesse em contribuir para o RifaStatus! Este documento fornece diretrizes para contribuições.
 
 ## 📋 Índice
 
@@ -20,7 +20,7 @@ Este projeto adere ao código de conduta do Contributor Covenant. Ao participar,
 
 ## 🚀 Como Contribuir
 
-Existem várias maneiras de contribuir para o RifaMax:
+Existem várias maneiras de contribuir para o RifaStatus:
 
 - **Relatórios de bugs**: Encontrou um problema? Abra uma issue!
 - **Solicitações de features**: Tem uma ideia legal? Compartilhe conosco!
@@ -43,8 +43,8 @@ Existem várias maneiras de contribuir para o RifaMax:
 
 1. **Fork o repositório**
 ```bash
-git clone https://github.com/seu-usuario/rifamax.git
-cd rifamax
+git clone https://github.com/seu-usuario/rifastatus.git
+cd rifastatus
 ```
 
 2. **Instale as dependências**
@@ -368,4 +368,4 @@ Se tiver alguma dúvida, não hesite em:
 
 ---
 
-Obrigado por contribuir para o RifaMax! 🎉
+Obrigado por contribuir para o RifaStatus! 🎉
