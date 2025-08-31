@@ -113,32 +113,29 @@ export const RaffleProvider = ({ children }) => {
       const querySnapshot = await getDocs(q);
       const numerosData = [];
       
-      // Buscar informações dos compradores para números vendidos apenas se o usuário estiver logado
-      // Isso evita erros de permissão quando usuários não autenticados acessam a rifa
+      // Buscar informações dos compradores para números vendidos (para todos os usuários)
       let usuariosData = {};
-      if (currentUser) {
-        const numerosVendidos = querySnapshot.docs.filter(doc => doc.data().status === 'vendido' && doc.data().id_usuario);
-        const userIds = [...new Set(numerosVendidos.map(doc => doc.data().id_usuario))];
-        
-        if (userIds.length > 0) {
-          try {
-            const usuariosSnapshot = await Promise.all(
-              userIds.map(userId => getDoc(doc(db, 'usuarios', userId)))
-            );
-            
-            usuariosSnapshot.forEach((userDoc, index) => {
-              if (userDoc.exists()) {
-                const userData = userDoc.data();
-                usuariosData[userIds[index]] = {
-                  nome: userData.nome,
-                  email: userData.email
-                };
-              }
-            });
-          } catch (userError) {
-            console.log('Erro ao carregar informações dos compradores (provavelmente permissão):', userError.message);
-            // Continuar sem as informações dos compradores
-          }
+      const numerosVendidos = querySnapshot.docs.filter(doc => doc.data().status === 'vendido' && doc.data().id_usuario);
+      const userIds = [...new Set(numerosVendidos.map(doc => doc.data().id_usuario))];
+      
+      if (userIds.length > 0) {
+        try {
+          const usuariosSnapshot = await Promise.all(
+            userIds.map(userId => getDoc(doc(db, 'usuarios', userId)))
+          );
+          
+          usuariosSnapshot.forEach((userDoc, index) => {
+            if (userDoc.exists()) {
+              const userData = userDoc.data();
+              usuariosData[userIds[index]] = {
+                nome: userData.nome,
+                email: userData.email
+              };
+            }
+          });
+        } catch (userError) {
+          console.log('Erro ao carregar informações dos compradores:', userError.message);
+          // Continuar sem as informações dos compradores
         }
       }
       
@@ -148,8 +145,8 @@ export const RaffleProvider = ({ children }) => {
           ...doc.data()
         };
         
-        // Adicionar informações do comprador se o número foi vendido e usuário está logado
-        if (currentUser && numeroData.status === 'vendido' && numeroData.id_usuario && usuariosData[numeroData.id_usuario]) {
+        // Adicionar informações do comprador se o número foi vendido
+        if (numeroData.status === 'vendido' && numeroData.id_usuario && usuariosData[numeroData.id_usuario]) {
           numeroData.comprador_nome = usuariosData[numeroData.id_usuario].nome;
           numeroData.comprador_email = usuariosData[numeroData.id_usuario].email;
         }
