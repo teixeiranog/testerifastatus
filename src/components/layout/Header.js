@@ -154,7 +154,7 @@ const Header = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-                             className="md:hidden bg-black border-t border-gray-800"
+                             className="md:hidden bg-black"
             >
               <div className="px-4 pt-2 pb-3 space-y-1">
                 {currentUser ? (
@@ -204,18 +204,16 @@ const Header = () => {
                     </button>
                   </div>
                 ) : (
-                  <div className="border-t border-gray-700 pt-3 mt-3">
-                    <Button
-                      variant="primary"
-                      fullWidth
-                      onClick={() => {
-                        setIsAuthModalOpen(true);
-                        setIsMenuOpen(false);
-                      }}
-                    >
-                      Entrar
-                    </Button>
-                  </div>
+                  <Button
+                    variant="primary"
+                    fullWidth
+                    onClick={() => {
+                      setIsAuthModalOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Entrar
+                  </Button>
                 )}
               </div>
             </motion.div>

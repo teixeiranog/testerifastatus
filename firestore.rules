@@ -14,8 +14,9 @@ service cloud.firestore {
     }
     
     // Usuários - podem ler e atualizar próprios dados, admins podem tudo
+    // Leitura pública para mostrar nomes dos compradores
     match /usuarios/{userId} {
-      allow read: if isOwner(userId) || isAdmin();
+      allow read: if true; // Público para mostrar nomes dos compradores
       allow create: if isOwner(userId);
       allow update: if isOwner(userId) || isAdmin();
       allow delete: if isAdmin();

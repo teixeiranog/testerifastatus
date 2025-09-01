@@ -78,7 +78,7 @@ const Users = () => {
       }
       
       if (filtroTipo !== 'todos') {
-        q = query(q, where('tipo', '==', filtroTipo));
+        q = query(q, where('tipo_usuario', '==', filtroTipo));
       }
       
       // Aplicar ordenação
@@ -127,7 +127,7 @@ const Users = () => {
       
       const usuariosAtivos = usuariosSnapshot.docs.filter(doc => doc.data().ativo).length;
       const usuariosInativos = usuariosSnapshot.docs.length - usuariosAtivos;
-      const admins = usuariosSnapshot.docs.filter(doc => doc.data().tipo === 'admin').length;
+      const admins = usuariosSnapshot.docs.filter(doc => doc.data().tipo_usuario === 'admin').length;
       
       // Calcular gastos por usuário
       const gastosPorUsuario = {};
@@ -175,7 +175,7 @@ const Users = () => {
   const alterarTipoUsuario = async (usuarioId, novoTipo) => {
     try {
       await updateDoc(doc(db, 'usuarios', usuarioId), {
-        tipo: novoTipo,
+        tipo_usuario: novoTipo,
         data_atualizacao: new Date()
       });
       
@@ -418,11 +418,11 @@ const Users = () => {
                       
                       <td className="py-4 px-4">
                         <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                          usuario.tipo === 'admin' 
+                          usuario.tipo_usuario === 'admin' 
                             ? 'bg-purple-100 text-purple-800' 
                             : 'bg-blue-100 text-blue-800'
                         }`}>
-                          {usuario.tipo === 'admin' ? (
+                          {usuario.tipo_usuario === 'admin' ? (
                             <>
                               <ShieldCheck className="w-3 h-3 mr-1" />
                               Admin
@@ -536,11 +536,11 @@ const Users = () => {
                     </span>
                     
                     <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                      usuario.tipo === 'admin' 
+                      usuario.tipo_usuario === 'admin' 
                         ? 'bg-purple-100 text-purple-800' 
                         : 'bg-blue-100 text-blue-800'
                     }`}>
-                      {usuario.tipo === 'admin' ? (
+                      {usuario.tipo_usuario === 'admin' ? (
                         <>
                           <ShieldCheck className="w-3 h-3 mr-1" />
                           Admin
@@ -720,7 +720,7 @@ const Users = () => {
               
               <div>
                 <label className="text-sm font-medium text-gray-700">Tipo</label>
-                <p className="text-gray-900 capitalize">{usuarioSelecionado.tipo || 'usuario'}</p>
+                <p className="text-gray-900 capitalize">{usuarioSelecionado.tipo_usuario || 'usuario'}</p>
               </div>
             </div>
             
@@ -774,7 +774,7 @@ const Users = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
                 <select
-                  value={usuarioSelecionado.tipo || 'usuario'}
+                  value={usuarioSelecionado.tipo_usuario || 'usuario'}
                   onChange={(e) => alterarTipoUsuario(usuarioSelecionado.id, e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                 >
