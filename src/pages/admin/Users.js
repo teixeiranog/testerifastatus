@@ -44,7 +44,7 @@ import Modal from '../../components/ui/Modal';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 
 const Users = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -255,7 +255,7 @@ const Users = () => {
     doc.text(`Receita Total: ${formatarValor(estatisticas?.totalGastos || 0)}`, 14, 76);
     
     // Tabela de usuários
-    doc.autoTable({
+    autoTable(doc, {
       startY: 90,
       head: [['Nome', 'Email', 'Telefone', 'Status', 'Tipo', 'Data Cadastro', 'Total Gasto']],
       body: usuariosFiltrados.map(usuario => [
