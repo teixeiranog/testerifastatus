@@ -714,4 +714,127 @@ const Users = () => {
               
               <div>
                 <label className="text-sm font-medium text-gray-700">Status</label>
-                <p className={`font-medium ${usuarioSelecionado.ativo ? 'text-green-600' : 'text-red-600'}`
+                <p className={`font-medium ${usuarioSelecionado.ativo ? 'text-green-600' : 'text-red-600'}`}>
+                  {usuarioSelecionado.ativo ? 'Ativo' : 'Inativo'}
+                </p>
+              </div>
+              
+              <div>
+                <label className="text-sm font-medium text-gray-700">Tipo de Usuário</label>
+                <p className={`font-medium ${usuarioSelecionado.tipo_usuario === 'admin' ? 'text-purple-600' : 'text-blue-600'}`}>
+                  {usuarioSelecionado.tipo_usuario === 'admin' ? 'Administrador' : 'Usuário'}
+                </p>
+              </div>
+            </div>
+            
+            {/* Informações Adicionais */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium text-gray-700">Total Gasto</label>
+                <p className="text-gray-900">{formatarValor(estatisticas?.gastosPorUsuario[usuarioSelecionado.id] || 0)}</p>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700">Última Atualização</label>
+                <p className="text-gray-900">{formatarData(usuarioSelecionado.data_atualizacao)}</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* Modal de Edição Simples */}
+      <Modal
+        isOpen={modalEdicao}
+        onClose={() => {
+          setModalEdicao(false);
+          setUsuarioEditando(null);
+        }}
+        title={`Editar Usuário: ${usuarioSelecionado?.nome || 'N/A'}`}
+      >
+        {usuarioSelecionado && (
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <select
+                  defaultValue={usuarioSelecionado.ativo ? 'ativo' : 'inativo'}
+                  onChange={(e) => {
+                    setUsuarioEditando(prev => ({
+                      ...prev,
+                      ativo: e.target.value === 'ativo'
+                    }));
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                >
+                  <option value="ativo">Ativo</option>
+                  <option value="inativo">Inativo</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
+                <select
+                  defaultValue={usuarioSelecionado.tipo_usuario || 'cliente'}
+                  onChange={(e) => {
+                    setUsuarioEditando(prev => ({
+                      ...prev,
+                      tipo_usuario: e.target.value
+                    }));
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                >
+                  <option value="cliente">Cliente</option>
+                  <option value="admin">Administrador</option>
+                </select>
+              </div>
+            </div>
+            
+            <div className="flex justify-end space-x-3 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setModalEdicao(false);
+                  setUsuarioEditando(null);
+                }}
+              >
+                Cancelar
+              </Button>
+              <Button
+                onClick={async () => {
+                  try {
+                    const mudancas = {};
+                    
+                    if (usuarioEditando?.ativo !== undefined && usuarioEditando.ativo !== usuarioSelecionado.ativo) {
+                      mudancas.ativo = usuarioEditando.ativo;
+                    }
+                    
+                    if (usuarioEditando?.tipo_usuario && usuarioEditando.tipo_usuario !== usuarioSelecionado.tipo_usuario) {
+                      mudancas.tipo_usuario = usuarioEditando.tipo_usuario;
+                    }
+                    
+                    if (Object.keys(mudancas).length > 0) {
+                      mudancas.data_atualizacao = new Date();
+                      await updateDoc(doc(db, 'usuarios', usuarioSelecionado.id), mudancas);
+                      toast.success('Usuário atualizado com sucesso!');
+                      carregarUsuarios();
+                    }
+                    
+                    setModalEdicao(false);
+                    setUsuarioEditando(null);
+                  } catch (error) {
+                    console.error('Erro ao atualizar usuário:', error);
+                    toast.error('Erro ao atualizar usuário');
+                  }
+                }}
+              >
+                Salvar Alterações
+              </Button>
+            </div>
+          </div>
+        )}
+      </Modal>
+    </div>
+  );
+};
+
+export default Users;
