@@ -43,6 +43,7 @@ import Loading from '../../components/ui/Loading';
 import Modal from '../../components/ui/Modal';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { jsPDF } from 'jspdf';
 
 const Users = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -232,6 +233,65 @@ const Users = () => {
 
   const totalPaginas = Math.ceil(totalUsuarios / USUARIOS_POR_PAGINA);
 
+  const exportarParaPDF = () => {
+    const doc = new jsPDF();
+    
+    // Título do documento
+    doc.setFontSize(20);
+    doc.text('Relatório de Usuários - RifaStatus', 14, 22);
+    
+    // Data de geração
+    doc.setFontSize(12);
+    doc.text(`Gerado em: ${formatarData(new Date())}`, 14, 32);
+    
+    // Estatísticas gerais
+    doc.setFontSize(14);
+    doc.text('Estatísticas Gerais:', 14, 45);
+    doc.setFontSize(10);
+    doc.text(`Total de Usuários: ${estatisticas?.total || 0}`, 14, 55);
+    doc.text(`Usuários Ativos: ${estatisticas?.ativos || 0}`, 14, 62);
+    doc.text(`Administradores: ${estatisticas?.admins || 0}`, 14, 69);
+    doc.text(`Receita Total: ${formatarValor(estatisticas?.totalGastos || 0)}`, 14, 76);
+    
+    // Tabela de usuários
+    doc.autoTable({
+      startY: 90,
+      head: [['Nome', 'Email', 'Telefone', 'Status', 'Tipo', 'Data Cadastro', 'Total Gasto']],
+      body: usuariosFiltrados.map(usuario => [
+        usuario.nome || 'N/A',
+        usuario.email || 'N/A',
+        usuario.telefone || 'N/A',
+        usuario.ativo ? 'Ativo' : 'Inativo',
+        usuario.tipo_usuario === 'admin' ? 'Administrador' : 'Usuário',
+        formatarData(usuario.data_criacao),
+        formatarValor(estatisticas?.gastosPorUsuario?.[usuario.id] || 0)
+      ]),
+      styles: {
+        fontSize: 8,
+        cellPadding: 2
+      },
+      headStyles: {
+        fillColor: [59, 130, 246],
+        textColor: 255,
+        fontStyle: 'bold'
+      },
+      alternateRowStyles: {
+        fillColor: [248, 250, 252]
+      }
+    });
+    
+    // Rodapé
+    const pageCount = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.text(`Página ${i} de ${pageCount}`, 14, doc.internal.pageSize.height - 10);
+    }
+    
+    doc.save(`usuarios-rifastatus-${format(new Date(), 'dd-MM-yyyy')}.pdf`);
+    toast.success('Relatório exportado com sucesso!');
+  };
+
   return (
     <div className="space-y-6 overflow-x-hidden max-w-full">
       {/* Header */}
@@ -246,7 +306,7 @@ const Users = () => {
         </div>
         
         <div className="flex space-x-3 mt-4 md:mt-0">
-          <Button variant="outline" className="flex items-center">
+          <Button variant="outline" className="flex items-center" onClick={exportarParaPDF}>
             <Download className="w-4 h-4 mr-2" />
             Exportar
           </Button>
