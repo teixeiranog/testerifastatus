@@ -56,6 +56,7 @@ const Users = () => {
   const [usuarioSelecionado, setUsuarioSelecionado] = useState(null);
   const [modalDetalhes, setModalDetalhes] = useState(false);
   const [modalEdicao, setModalEdicao] = useState(false);
+  const [usuarioEditando, setUsuarioEditando] = useState(null);
   const [estatisticas, setEstatisticas] = useState(null);
 
   const USUARIOS_POR_PAGINA = 20;
@@ -713,95 +714,4 @@ const Users = () => {
               
               <div>
                 <label className="text-sm font-medium text-gray-700">Status</label>
-                <p className={`font-medium ${usuarioSelecionado.ativo ? 'text-green-600' : 'text-red-600'}`}>
-                  {usuarioSelecionado.ativo ? 'Ativo' : 'Inativo'}
-                </p>
-              </div>
-              
-              <div>
-                <label className="text-sm font-medium text-gray-700">Tipo</label>
-                <p className="text-gray-900 capitalize">{usuarioSelecionado.tipo_usuario || 'usuario'}</p>
-              </div>
-            </div>
-            
-            {/* Estatísticas do Usuário */}
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-medium text-gray-900 mb-3">Estatísticas</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-primary-600">
-                    {formatarValor(estatisticas?.gastosPorUsuario[usuarioSelecionado.id] || 0)}
-                  </p>
-                  <p className="text-sm text-gray-600">Total Gasto</p>
-                </div>
-                
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-green-600">0</p>
-                  <p className="text-sm text-gray-600">Rifas Ganhas</p>
-                </div>
-                
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-blue-600">0</p>
-                  <p className="text-sm text-gray-600">Tickets Comprados</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </Modal>
-
-      {/* Modal de Edição */}
-      <Modal
-        isOpen={modalEdicao}
-        onClose={() => setModalEdicao(false)}
-        title={`Editar Usuário: ${usuarioSelecionado?.nome || 'N/A'}`}
-      >
-        {usuarioSelecionado && (
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select
-                  value={usuarioSelecionado.ativo ? 'ativo' : 'inativo'}
-                  onChange={(e) => alterarStatusUsuario(usuarioSelecionado.id, e.target.value === 'ativo')}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                >
-                  <option value="ativo">Ativo</option>
-                  <option value="inativo">Inativo</option>
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
-                <select
-                  value={usuarioSelecionado.tipo_usuario || 'usuario'}
-                  onChange={(e) => alterarTipoUsuario(usuarioSelecionado.id, e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                >
-                  <option value="usuario">Usuário</option>
-                  <option value="admin">Administrador</option>
-                </select>
-              </div>
-            </div>
-            
-            <div className="flex justify-end space-x-3 pt-4">
-              <Button
-                variant="outline"
-                onClick={() => setModalEdicao(false)}
-              >
-                Cancelar
-              </Button>
-              <Button
-                onClick={() => setModalEdicao(false)}
-              >
-                Salvar Alterações
-              </Button>
-            </div>
-          </div>
-        )}
-      </Modal>
-    </div>
-  );
-};
-
-export default Users;
+                <p className={`font-medium ${usuarioSelecionado.ativo ? 'text-green-600' : 'text-red-600'}`
