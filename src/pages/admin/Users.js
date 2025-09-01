@@ -43,7 +43,8 @@ import Loading from '../../components/ui/Loading';
 import Modal from '../../components/ui/Modal';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { jsPDF } from 'jspdf';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const Users = () => {
   const [usuarios, setUsuarios] = useState([]);
